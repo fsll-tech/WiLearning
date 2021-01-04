@@ -33,7 +33,8 @@ const logger = getLogger('Server');
 import { docRouter } from './route/document';
 import { avatarRouter } from './route/avatar';
 import { roomRouter } from './route/room';
-import { ClaDocPages, ClaDocs, ClaRoom} from './model/model';
+import { userRouter } from './route/user';
+import { ClaDocPages, ClaDocs, ClaRoom, ClaUser } from './model/model';
 import * as path from 'path';
 import {lConfig} from './config/config';
 import got from 'got';
@@ -111,7 +112,8 @@ async function run() {
 			entities:[
 				ClaDocPages,
 				ClaDocs,
-				ClaRoom
+				ClaRoom,
+        ClaUser
 			],
 		});
 	} catch(error) {
@@ -143,6 +145,7 @@ const runHttpsServer = async () => {
 	}));
 
 	app.use('/room', roomRouter);
+	app.use('/user', userRouter);
 	app.use('/docs', docRouter);
 	app.use('/avatar', avatarRouter);
 	app.use('/admin', express.static('admin'));

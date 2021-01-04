@@ -70,3 +70,18 @@ export class ClaDocPages extends BaseEntity{
     @ManyToOne(type => ClaDocs, doc=>doc.pages)
     doc: ClaDocs;
 }
+
+@Entity()
+export class ClaUser extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: string;
+
+  @Column()
+  username: string;
+
+  @Column()
+  password: string;
+
+  @Column()
+  nickname: string;
+}
