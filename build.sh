@@ -40,13 +40,15 @@ build_server() {
 	fi
 
 	cp -a dist/* ../dist/
-	ln -s $PWD/node_modules ../dist/
+  if [ ! -L "../dist/node_modules" ];then
+    ln -s $PWD/node_modules ../dist/
+  fi
 	cd ..
 }
 
 # build app client
 build_app() {
-	cd app 
+	cd app
 	if [ ! -d "node_modules" ];then
 		npm_command i
 	fi
@@ -97,7 +99,7 @@ case "$1" in
 	;;
 	*)
 	echo
-	echo "Usage: ./build.sh [all/admin/web/server]"
+	echo "Usage: ./build.sh [all/admin/app/server]"
 	echo
 	;;
 esac

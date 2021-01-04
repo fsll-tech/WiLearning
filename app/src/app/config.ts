@@ -15,15 +15,15 @@
 import { environment } from '../environments/environment';
 
 export const MediaServer = {
-  address: 'rtc.liweix.com',
+  address: '127.0.0.1',
 };
 
 export const AdminServer = {
-  address: 'rtc.liweix.com',
+  address: '127.0.0.1',
 };
 
 export const DocServer = {
-  address: 'rtc.liweix.com'
+  address: '127.0.0.1'
 };
 
 export const RequestConnectVideoTimeout = 60;
