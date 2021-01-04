@@ -20,7 +20,7 @@ import { Injectable } from '@angular/core';
 })
 export class I18nService {
   public en = {
-    username: 'nickname',
+    username: 'username',
     password: 'login password',
     roomid: 'roomid',
     userLogin: 'User Login',
@@ -91,7 +91,7 @@ export class I18nService {
 
   public cn = {
     userLogin: '用户登录',
-    username: '昵称（任意）',
+    username: '用户名',
     password: '登录密码',
     roomid: '房间ID',
     login: '登录',

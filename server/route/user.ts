@@ -5,7 +5,7 @@ import { ClaUser } from '../model/model';
 
 export const userRouter = express.Router();
 
-userRouter.get('/login', async (req: any, res) => {
+userRouter.post('/login', async (req: any, res) => {
   logger.debug('login: ' + JSON.stringify(req.body));
 
   const { username, password } = req.body;
@@ -16,7 +16,7 @@ userRouter.get('/login', async (req: any, res) => {
     }
   });
   if (!dbUser) {
-    res.status(400).send({ message: '用户名或密码不正确' });
+    res.status(400).send({ code: 40412, message: '用户名或密码不正确' });
     return;
   }
   res.status(200).send({ user: dbUser });

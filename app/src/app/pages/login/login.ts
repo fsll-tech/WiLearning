@@ -1,15 +1,14 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../service/auth.service';
-import { LoggerService } from '../../service/logger.service';
-import { ROLE, WlRoomInfo } from '../../defines';
-import { ProfileService } from '../../service/profile.service';
-import { I18nService } from '../../service/i18n.service';
-import { ToastController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
-import { WlhttpService } from '../../service/wlhttp.service';
-import { AdminServer } from '../../config';
+import {Component} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from '../../service/auth.service';
+import {LoggerService} from '../../service/logger.service';
+import {ROLE, WlRoomInfo} from '../../defines';
+import {ProfileService} from '../../service/profile.service';
+import {I18nService} from '../../service/i18n.service';
+import {AlertController, ToastController} from '@ionic/angular';
+import {WlhttpService} from '../../service/wlhttp.service';
+import {AdminServer} from '../../config';
 
 @Component({
   selector: 'page-login',
@@ -56,10 +55,6 @@ export class LoginPage {
 
       this.logger.debug('url: %s, role: %s, room: %s, user: %s, password: %s', this.auth.redirectUrl,
         this.roler, this.room, this.username, this.password);
-
-     if(this.room && this.username && this.password) {
-        this.login();
-     } 
     }
   }
 
@@ -74,16 +69,13 @@ export class LoginPage {
   login() {
       const username = this.username.trim();
       const password = this.password.trim();
-      const roler = this.roler;
-      const roomId = this.room.trim();
 
-      this.auth.login({ username, password, roler, roomId }).then(async (res) => {
+      this.auth.userLogin({ username, password }).then(async (res: { user: { nickname: string } }) => {
         this.logger.debug(res);
-        this.profile.me.displayName = username;
-        this.profile.me.roler = roler;
-        this.profile.roomId = roomId;
+        this.profile.me.displayName = res.user.nickname;
+        this.profile.me.roler = ROLE.AUDIENCE;
 
-        this.getRoomInfo(roomId);
+        // this.getRoomInfo(roomId);
       }).catch((err) => {
           this.logger.error(err);
           this.loginError(err);

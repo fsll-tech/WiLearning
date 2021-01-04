@@ -32,18 +32,6 @@
           {{i18n.lang.inputPassword}}
         </p>
       </ion-text>
-
-      <ion-item [hidden]="roomInit">
-        <ion-label position="stacked" color="primary">{{i18n.lang.roomid}}</ion-label>
-        <ion-input [(ngModel)]="room" name="roomId" type="text" #roomInput="ngModel" spellcheck="false" autocapitalize="off" required>
-        </ion-input>
-      </ion-item>
-
-      <ion-text color="danger" [hidden]="roomInit">
-        <p [hidden]="roomInput.valid || submitted == false" class="ion-padding-start">
-          {{i18n.lang.inputRoom}}
-        </p>
-      </ion-text>
     </ion-list>
 
     <ion-row>

@@ -39,4 +39,12 @@ export class AuthService {
 
     return this.http.http.get(loginUrl).toPromise();
   }
+
+  userLogin(user: { username: string, password: string }) {
+    this.isLoggedIn = true;
+    const loginUrl = `https://${AdminServer.address}/user/login`;
+    this.logger.debug('loginUrl : %s', loginUrl);
+
+    return this.http.http.post(loginUrl, { username: user.username, password: user.password }).toPromise();
+  }
 }
