@@ -74,7 +74,7 @@ export class LoginPage {
         this.logger.debug(res);
         this.profile.me.displayName = res.user.nickname;
         this.profile.me.roler = ROLE.AUDIENCE;
-
+        this.router.navigateByUrl('/rooms');
         // this.getRoomInfo(roomId);
       }).catch((err) => {
           this.logger.error(err);
