@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MemberComponent } from './member/member.component';
 import { MainComponent } from './main/main.component';
 import { LoginGuard } from './guard/login.guard';
+import { RoomsComponent } from './rooms/rooms.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,11 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
   },
+  {
+    path: 'rooms',
+    component: RoomsComponent,
+    canActivate: [LoginGuard]
+  }
 ];
 
 @NgModule({

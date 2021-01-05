@@ -32,6 +32,7 @@ import { PencilComponent } from './popover/pencil/pencil.component';
 import { PagetoolComponent } from './pagetool/pagetool.component';
 import { ThumbnailComponent } from './thumbnail/thumbnail.component';
 import { InformationComponent } from './popover/information/information.component';
+import { RoomsComponent } from './rooms/rooms.component';
 
 @NgModule({
   imports: [
@@ -70,6 +71,7 @@ import { InformationComponent } from './popover/information/information.componen
     VideoplayerComponent,
     DrawtoolComponent,
     PagetoolComponent,
+    RoomsComponent,
   ],
   entryComponents: [
     MoreComponent,
