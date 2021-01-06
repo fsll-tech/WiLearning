@@ -8,3 +8,10 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<ion-content>
+  <ion-list lines="full">
+    <ion-item *ngFor="let room of rooms" button (click)="gotoRoom(room)">
+      <ion-label>{{ room.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
