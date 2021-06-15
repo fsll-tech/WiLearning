@@ -46,9 +46,9 @@ build_server() {
 
 # build app client
 build_app() {
-	cd app 
+	cd app
 	if [ ! -d "node_modules" ];then
-		npm_command i
+		npm_command i --legacy-peer-deps
 	fi
 
 	npm run build
@@ -64,7 +64,7 @@ build_app() {
 build_admin() {
 	cd admin
 	if [ ! -d "node_modules" ];then
-		npm_command i
+		npm_command i --legacy-peer-deps
 	fi
 
 	npm run build
