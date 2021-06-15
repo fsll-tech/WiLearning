@@ -67,7 +67,7 @@ export class SigninComponent implements OnInit {
       this.auth.isLoggedIn = true;
       this.router.navigate(['/nav']);
     }, (error) => {
-      this.snackBar.open(error.error, 'Undo');
+      this.snackBar.open(error.error, 'Undo', { duration: 3000 });
     });
   }
 
