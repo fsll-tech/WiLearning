@@ -33,6 +33,7 @@ const logger = getLogger('Server');
 import { docRouter } from './route/document';
 import { avatarRouter } from './route/avatar';
 import { roomRouter } from './route/room';
+import { adminRouter } from './route/admin';
 import { ClaDocPages, ClaDocs, ClaRoom} from './model/model';
 import * as path from 'path';
 import {lConfig} from './config/config';
@@ -145,6 +146,7 @@ const runHttpsServer = async () => {
 	app.use('/room', roomRouter);
 	app.use('/docs', docRouter);
 	app.use('/avatar', avatarRouter);
+	app.use('/api/admin', adminRouter);
 	app.use('/admin', express.static('admin'));
 	app.get('/admin/*', (req, res) => {
 		const indexFile = path.resolve(__dirname + '/admin/index.html');

@@ -15,7 +15,7 @@ export const lConfig =
 		initialAvailableOutgoingBitrate : 200000
 	},
 
-	databaseFile : '/var/run/wilearning/database',
+	databaseFile : '../data/database',
 	roomStatusInterval: 300, // seconds
-	publicDirectory : '/var/run/wilearning/public/'
+	publicDirectory : '../data/public/'
 };
