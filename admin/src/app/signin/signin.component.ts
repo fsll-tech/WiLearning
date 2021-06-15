@@ -17,6 +17,9 @@ import { I18nService } from '../service/i18n.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {getHost} from '../define';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signin',
@@ -35,6 +38,8 @@ export class SigninComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private auth: AuthService,
+    private http: HttpClient,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -53,10 +58,17 @@ export class SigninComponent implements OnInit {
   login() {
     this.username = this.userForm.get('user');
     this.password = this.userForm.get('password');
-    this.auth.isLoggedIn = true;
-
-    this.router.navigate(['/nav']);
-
+    this.http.post(getHost() + '/api/admin/login', JSON.stringify({
+      username: this.username.value,
+      password: this.password.value
+    }), {
+      headers: {'Content-Type': 'application/json'}
+    }).subscribe((data) => {
+      this.auth.isLoggedIn = true;
+      this.router.navigate(['/nav']);
+    }, (error) => {
+      this.snackBar.open(error.error, 'Undo');
+    });
   }
 
   langSelect() {

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  host: 'http://rtc.liweix.com'
+  host: 'http://127.0.0.1'
 };
 
 /*

@@ -13,9 +13,7 @@ const MOCK_ADMIN_USERS = [
 
 adminRouter.post('/login', async (req, res) => {
   logger.debug('adminLogin: ' + JSON.stringify(req.body));
-
   const { username, password } = req.body;
-
   for (let i = 0; i < MOCK_ADMIN_USERS.length; i++) {
     if (MOCK_ADMIN_USERS[i].username === username && MOCK_ADMIN_USERS[i].password === password) {
       res.status(200).send({ result: 'OK' });
