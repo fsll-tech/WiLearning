@@ -15,15 +15,15 @@
 import { environment } from '../environments/environment';
 
 export const MediaServer = {
-  address: 'rtc.liweix.com',
+  address: 'wilearning.kotensoft.com',
 };
 
 export const AdminServer = {
-  address: 'rtc.liweix.com',
+  address: 'wilearning.kotensoft.com',
 };
 
 export const DocServer = {
-  address: 'rtc.liweix.com'
+  address: 'wilearning.kotensoft.com'
 };
 
 export const RequestConnectVideoTimeout = 60;

@@ -1,3 +1,3 @@
 export const MediaServer = {
-  address: 'rtc.liweix.com'
+  address: 'wilearning.kotensoft.com'
 };

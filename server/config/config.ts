@@ -1,7 +1,7 @@
 export const lConfig =
 {
-	listeningPort         : 443,
-	listeningRedirectPort : 80,
+	listeningPort         : 7777,
+	listeningRedirectPort : 7778,
 
 	worker: {
 		logLevel : 'warn',
