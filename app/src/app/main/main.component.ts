@@ -21,6 +21,7 @@ import { DocumentService } from '../service/document.service';
 import { I18nService } from '../service/i18n.service';
 import { InformationComponent } from '../popover/information/information.component';
 import { MediaService } from '../service/media.service';
+import {AuthService} from "../service/auth.service";
 
 @Component({
   selector: 'app-main',
@@ -72,6 +73,7 @@ export class MainComponent implements OnInit {
     private ds: DocumentService,
     private alert: AlertController,
     private media: MediaService,
+    private auth: AuthService,
   ) {
     this.initializeApp();
 
@@ -239,7 +241,10 @@ export class MainComponent implements OnInit {
         {
           text: this.i18n.lang.ok,
           handler: async () => {
-            await this.signaling.sendClosePeer(this.classroom.bClassStarter);
+            this.auth.logout();
+            try {
+              await this.signaling.sendClosePeer(this.classroom.bClassStarter);
+            } catch { }
             location.reload();
             this.logger.debug('Okay');
           }

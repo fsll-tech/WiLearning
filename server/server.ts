@@ -67,10 +67,10 @@ const publicIp = yargs.argv.publicIp;
 	}
 });
 
-// const tls = {
-// 	cert: fs.readFileSync(certfile),
-// 	key: fs.readFileSync(keyfile),
-// };
+const tls = {
+	cert: fs.readFileSync(certfile),
+	key: fs.readFileSync(keyfile),
+};
 
 const app = express();
 app.use(compression());
@@ -169,10 +169,10 @@ const runHttpsServer = async () => {
 		res.status(404).send({res: '404'});
 	});
 
-	// httpsServer = https.createServer(tls, app);
-	// httpsServer.listen(lConfig.listeningPort);
+	httpsServer = https.createServer(tls, app);
+	httpsServer.listen(lConfig.listeningPort);
 	const httpServer = http.createServer(app);
-	httpServer.listen(lConfig.listeningPort);
+	httpServer.listen(lConfig.httpListeningPort);
 }
 
 const runWebSocketServer = async () => {

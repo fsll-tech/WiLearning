@@ -35,7 +35,7 @@ export class AuthService {
     private http: WlhttpService,
     private profile: ProfileService,
   ) {
-    this.isLoggedIn = localStorage.getItem('isLoggedIn');
+    this.isLoggedIn = localStorage.getItem('isLoggedIn2');
     if (this.isLoggedIn) {
       this.isLoggedIn = JSON.parse(this.isLoggedIn);
       const oldProfile: any = JSON.parse(localStorage.getItem('profile'));
@@ -49,20 +49,19 @@ export class AuthService {
     }
   }
   login(userInfo: {username: string, password: string, roomId: string, roler}) {
-    this.isLoggedIn = true;
-    localStorage.setItem('isLoggedIn', JSON.stringify(true));
     const cryptoPasswd = CryptoJs.MD5(userInfo.password).toString().toUpperCase();
-    const loginUrl = `https://${AdminServer.address}/room/login/${userInfo.roomId}/${userInfo.roler}/${userInfo.username}/${cryptoPasswd}`;
+    const loginUrl = `${AdminServer.address}/room/login/${userInfo.roomId}/${userInfo.roler}/${userInfo.username}/${cryptoPasswd}`;
     this.logger.debug('loginUrl : %s', loginUrl);
 
     return this.http.http.get(loginUrl).toPromise();
   }
   logout() {
     this.isLoggedIn = false;
-    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('isLoggedIn2');
+    localStorage.removeItem('profile');
   }
   getRoomInfo(roomid) {
-    const roomDetailUrl = `https://${AdminServer.address}/room/info/${roomid}`;
+    const roomDetailUrl = `${AdminServer.address}/room/info/${roomid}`;
     this.http.http.get(roomDetailUrl).toPromise().then(roomInfo => {
       this.logger.debug('room info: ', roomInfo);
       this.profile.roomInfo = roomInfo as WlRoomInfo;

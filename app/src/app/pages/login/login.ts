@@ -78,6 +78,8 @@ export class LoginPage {
       const roomId = this.room.trim();
 
       this.auth.login({ username, password, roler, roomId }).then(async (res) => {
+        this.auth.isLoggedIn = true;
+        localStorage.setItem('isLoggedIn2', JSON.stringify(true));
         this.logger.debug(res);
         this.profile.me.displayName = username;
         this.profile.me.roler = roler;
@@ -117,7 +119,7 @@ export class LoginPage {
   }
 
   getRoomInfo(roomid) {
-    const roomDetailUrl = `https://${AdminServer.address}/room/info/${roomid}`;
+    const roomDetailUrl = `${AdminServer.address}/room/info/${roomid}`;
     this.http.http.get(roomDetailUrl).toPromise().then(roomInfo => {
         this.logger.debug('room info: ', roomInfo);
         this.profile.roomInfo = roomInfo as WlRoomInfo;
