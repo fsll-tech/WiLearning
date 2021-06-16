@@ -44,9 +44,9 @@ export class SigninComponent implements OnInit {
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
-      user: ['admin', Validators.required],
+      user: ['admin01', Validators.required],
       password: [
-        'admin',
+        '123456',
         [
           Validators.minLength(3),
           Validators.maxLength(10)
@@ -65,6 +65,7 @@ export class SigninComponent implements OnInit {
       headers: {'Content-Type': 'application/json'}
     }).subscribe((data) => {
       this.auth.isLoggedIn = true;
+      localStorage.setItem('isLoggedIn', JSON.stringify(true));
       this.router.navigate(['/nav']);
     }, (error) => {
       this.snackBar.open(error.error, 'Undo', { duration: 3000 });

@@ -19,6 +19,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { I18nService } from '../service/i18n.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { LoggerService } from '../service/logger.service';
+import {AuthService} from "../service/auth.service";
 
 @Component({
   selector: 'app-nav',
@@ -40,6 +41,7 @@ export class NavComponent {
     private breakpointObserver: BreakpointObserver,
     private router: Router,
     private logger: LoggerService,
+    private auth: AuthService
     ) {
       this.router.events.subscribe(value => {
         if ( value instanceof NavigationEnd) {
@@ -48,4 +50,9 @@ export class NavComponent {
       });
     }
 
+  logout() {
+    localStorage.removeItem('isLoggedIn');
+    this.router.navigate(['/sigin']);
+    this.auth.isLoggedIn = false;
+  }
 }

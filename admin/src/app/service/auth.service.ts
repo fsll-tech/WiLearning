@@ -18,8 +18,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
+  public isLoggedIn: any = false;
 
-  isLoggedIn = false;
-
-  constructor() { }
+  constructor() {
+    this.isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (this.isLoggedIn) {
+      this.isLoggedIn = JSON.parse(this.isLoggedIn);
+    } else {
+      this.isLoggedIn = false;
+    }
+  }
 }
