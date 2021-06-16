@@ -14,16 +14,18 @@
 */
 import { environment } from '../environments/environment';
 
+const address = environment.production ? 'wilearning.kotensoft.com' : '127.0.0.1:7777';
+
 export const MediaServer = {
-  address: 'wilearning.kotensoft.com',
+  address,
 };
 
 export const AdminServer = {
-  address: 'wilearning.kotensoft.com',
+  address,
 };
 
 export const DocServer = {
-  address: 'wilearning.kotensoft.com'
+  address
 };
 
 export const RequestConnectVideoTimeout = 60;
