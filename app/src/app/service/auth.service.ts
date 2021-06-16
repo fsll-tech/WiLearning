@@ -18,25 +18,57 @@ import * as CryptoJs from 'crypto-js';
 import { WlhttpService } from './wlhttp.service';
 import { LoggerService } from './logger.service';
 import { AdminServer } from '../config';
+import {ProfileService} from './profile.service';
+import {WlRoomInfo} from '../defines';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   public redirectUrl: string;
-  public isLoggedIn = false;
+  public isLoggedIn: any = false;
 
   constructor(
+    public router: Router,
     private logger: LoggerService,
     private http: WlhttpService,
+    private profile: ProfileService,
   ) {
+    this.isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (this.isLoggedIn) {
+      this.isLoggedIn = JSON.parse(this.isLoggedIn);
+      const oldProfile: any = JSON.parse(localStorage.getItem('profile'));
+      this.profile.me.displayName = oldProfile.me.displayName;
+      this.profile.me.roler = oldProfile.me.roler;
+      this.profile.roomId = oldProfile.roomId;
+
+
+    } else {
+      this.isLoggedIn = false;
+    }
   }
   login(userInfo: {username: string, password: string, roomId: string, roler}) {
     this.isLoggedIn = true;
+    localStorage.setItem('isLoggedIn', JSON.stringify(true));
     const cryptoPasswd = CryptoJs.MD5(userInfo.password).toString().toUpperCase();
     const loginUrl = `https://${AdminServer.address}/room/login/${userInfo.roomId}/${userInfo.roler}/${userInfo.username}/${cryptoPasswd}`;
     this.logger.debug('loginUrl : %s', loginUrl);
 
     return this.http.http.get(loginUrl).toPromise();
+  }
+  logout() {
+    this.isLoggedIn = false;
+    localStorage.removeItem('isLoggedIn');
+  }
+  getRoomInfo(roomid) {
+    const roomDetailUrl = `https://${AdminServer.address}/room/info/${roomid}`;
+    this.http.http.get(roomDetailUrl).toPromise().then(roomInfo => {
+      this.logger.debug('room info: ', roomInfo);
+      this.profile.roomInfo = roomInfo as WlRoomInfo;
+      this.router.navigateByUrl(this.redirectUrl);
+    }).catch(error => {
+      this.logger.error(error.error);
+    });
   }
 }

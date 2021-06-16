@@ -14,7 +14,7 @@
 */
 import { environment } from '../environments/environment';
 
-const address = environment.production ? 'wilearning.kotensoft.com' : '127.0.0.1:7777';
+const address = environment.production ? 'wilearning.eggjs.tech' : '127.0.0.1:7777';
 
 export const MediaServer = {
   address,

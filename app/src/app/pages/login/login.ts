@@ -59,7 +59,7 @@ export class LoginPage {
 
      if(this.room && this.username && this.password) {
         this.login();
-     } 
+     }
     }
   }
 
@@ -82,6 +82,14 @@ export class LoginPage {
         this.profile.me.displayName = username;
         this.profile.me.roler = roler;
         this.profile.roomId = roomId;
+
+        localStorage.setItem('profile', JSON.stringify({
+          me: {
+            displayName: username,
+            roler,
+          },
+          roomId
+        }));
 
         this.getRoomInfo(roomId);
       }).catch((err) => {
