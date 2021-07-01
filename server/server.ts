@@ -14,9 +14,9 @@
  */
 process.title = 'WiLearning';
 
-import * as fs from 'fs';
+// import * as fs from 'fs';
 import * as os from 'os';
-import * as https from 'https';
+// import * as https from 'https';
 import * as http from 'http';
 import express from 'express';
 import {types as mediasoupTypes} from 'mediasoup';
@@ -24,7 +24,7 @@ import { Room } from './lib/Room';
 import { Peer } from './lib/Peer';
 import { createConnection } from 'typeorm';
 import * as socketio from 'socket.io';
-import yargs from 'yargs';
+// import yargs from 'yargs';
 
 import { getLogger, configure } from 'log4js';
 configure('./log4js.json');
@@ -37,7 +37,7 @@ import { adminRouter } from './route/admin';
 import { ClaDocPages, ClaDocs, ClaRoom} from './model/model';
 import * as path from 'path';
 import {lConfig} from './config/config';
-import got from 'got';
+// import got from 'got';
 
 const helmet = require('helmet');
 const cors = require('cors');
@@ -46,31 +46,31 @@ const bodyParser = require('body-parser');
 const compression = require('compression');
 const morgan = require('morgan');
 
-yargs.usage('Usage: $0 --cert [file] --key [file] --eth [ethname] --publicIp [ipAdress]')
-.version('wilearning v2.0')
-.demandOption(['cert', 'key'])
-.option('cert', {describe : 'ssl certificate file'})
-.option('key', {describe: 'ssl certificate key file'})
-.option('eth', {describe: 'local network interface, default "eth0"'})
-.option('publicIp', {describe: 'public ip address, default get from network'});
+// yargs.usage('Usage: $0 --cert [file] --key [file] --eth [ethname] --publicIp [ipAdress]')
+// .version('wilearning v2.0')
+// .demandOption(['cert', 'key'])
+// .option('cert', {describe : 'ssl certificate file'})
+// .option('key', {describe: 'ssl certificate key file'})
+// .option('eth', {describe: 'local network interface, default "eth0"'})
+// .option('publicIp', {describe: 'public ip address, default get from network'});
 
 
-const certfile = yargs.argv.cert as string;
-const keyfile = yargs.argv.key as string;
-const localEth = yargs.argv.eth as string || 'eth0';
-const publicIp = yargs.argv.publicIp;
+// const certfile = yargs.argv.cert as string;
+// const keyfile = yargs.argv.key as string;
+// const localEth = yargs.argv.eth as string || 'eth0';
+// const publicIp = yargs.argv.publicIp;
 
-[certfile, keyfile].forEach(file => {
-	if (!fs.existsSync(file)){
-		logger.error('%s do not exist!', file);
-		process.exit(-1);
-	}
-});
+// [certfile, keyfile].forEach(file => {
+// 	if (!fs.existsSync(file)){
+// 		logger.error('%s do not exist!', file);
+// 		process.exit(-1);
+// 	}
+// });
 
-const tls = {
-	cert: fs.readFileSync(certfile),
-	key: fs.readFileSync(keyfile),
-};
+// const tls = {
+// 	cert: fs.readFileSync(certfile),
+// 	key: fs.readFileSync(keyfile),
+// };
 
 const app = express();
 app.use(compression());
@@ -88,11 +88,11 @@ let nextMediasoupWorkerIdx = 0;
 const rooms = new Map<string, Room>();
 app.locals.rooms = rooms;
 
-let httpsServer: https.Server;
+let httpsServer: http.Server;
 let io: socketio.Server;
 
 async function run() {
-	await getIps();
+	// await getIps();
 
 	// Run a mediasoup Worker.
 	await runMediasoupWorkers();
@@ -169,10 +169,10 @@ const runHttpsServer = async () => {
 		res.status(404).send({res: '404'});
 	});
 
-	httpsServer = https.createServer(tls, app);
+	httpsServer = http.createServer(app);
 	httpsServer.listen(lConfig.listeningPort);
-	const httpServer = http.createServer(app);
-	httpServer.listen(lConfig.httpListeningPort);
+	// const httpServer = http.createServer(app);
+	// httpServer.listen(lConfig.httpListeningPort);
 }
 
 const runWebSocketServer = async () => {
@@ -226,8 +226,8 @@ const runMediasoupWorkers = async () => {
 				logLevel   : lConfig.worker.logLevel,
 				rtcMinPort : lConfig.worker.rtcMinPort,
 				rtcMaxPort : lConfig.worker.rtcMaxPort,
-				dtlsCertificateFile: certfile,
-				dtlsPrivateKeyFile: keyfile
+				// dtlsCertificateFile: certfile,
+				// dtlsPrivateKeyFile: keyfile
 		}) as mediasoupTypes.Worker;
 
 		worker.on('died', () => {
@@ -271,44 +271,44 @@ const getOrCreateRoom = async (roomId: string) => {
 	return room;
 }
 
-const getIps = async () => {
-	const localIp = getLocalIp(localEth);
-	let announcedIp = publicIp;
+// const getIps = async () => {
+// 	const localIp = getLocalIp(localEth);
+// 	let announcedIp = publicIp;
+//
+// 	if ( !announcedIp ) {
+// 		const url = 'https://api.ipify.org?format=json';
+// 		try {
+// 			const resp = await got(url).json() as any;
+// 			announcedIp = resp.ip;
+// 		} catch(e) {
+// 			logger.error('get public ip error!', e.message);
+// 		}
+// 	}
+//
+// 	if ( !announcedIp ) {
+// 		logger.error('Got public ip error! exit now!');
+// 		process.exit(-1);
+// 	}
+//
+// 	logger.info('localIp: %s, publicIp: %s', localIp, announcedIp);
+//
+// 	lConfig.webRtcTransport.listenIps = [{
+// 		ip: localIp,
+// 		announcedIp
+// 	}] as any;
+// }
 
-	if ( !announcedIp ) {
-		const url = 'https://api.ipify.org?format=json';
-		try {
-			const resp = await got(url).json() as any;
-			announcedIp = resp.ip;
-		} catch(e) {
-			logger.error('get public ip error!', e.message);
-		}
-	}
-
-	if ( !announcedIp ) {
-		logger.error('Got public ip error! exit now!');
-		process.exit(-1);
-	}
-
-	logger.info('localIp: %s, publicIp: %s', localIp, announcedIp);
-
-	lConfig.webRtcTransport.listenIps = [{
-		ip: localIp,
-		announcedIp
-	}] as any;
-}
-
-const getLocalIp = (eth: string) => {
-	const eths= os.networkInterfaces()[eth];
-
-	let localIp = '';
-	eths && eths.forEach(e => {
-		if(e.family === 'IPv4') {
-			localIp = e.address;
-		}
-	});
-
-	return localIp;
-}
+// const getLocalIp = (eth: string) => {
+// 	const eths= os.networkInterfaces()[eth];
+//
+// 	let localIp = '';
+// 	eths && eths.forEach(e => {
+// 		if(e.family === 'IPv4') {
+// 			localIp = e.address;
+// 		}
+// 	});
+//
+// 	return localIp;
+// }
 
 run();

@@ -10,7 +10,9 @@ export const lConfig =
 	},
 
 	webRtcTransport : {
-		listenIps : [],
+		listenIps : [{
+		  ip: '127.0.0.1'
+    }],
 		maxIncomingBitrate              : 350000,
 		initialAvailableOutgoingBitrate : 200000
 	},

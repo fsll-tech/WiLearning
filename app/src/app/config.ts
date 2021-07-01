@@ -21,7 +21,7 @@ export const MediaServer = {
 };
 
 export const AdminServer = {
-  address: `${location.protocol}//${environment.production ? address : '127.0.0.1:7778'}`,
+  address: `${location.protocol}//${address}`,
 };
 
 export const DocServer = {
