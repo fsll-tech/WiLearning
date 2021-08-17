@@ -31,17 +31,6 @@ WiLearning使用了WebRTC技术，服务器端使用Typescript + Nodejs + MediaS
 * "房间不存在" --- 在app/src/app/config.ts修改服务器地址，重新编译app
 * "不显示视频" --- 网络配置错误，修改start.sh文件，将默认使用的eth0改成可用的网卡名
 
-# 代码
-```
-git clone https://github.com/wistingcn/WiLearning
-```
-
-## 安装cnpm
-```
-node -v #版本需要大于v12
-npm install -g cnpm
-```
-
 ## 构建所有
 ```
 ./build.sh all
@@ -55,6 +44,7 @@ npm install -g cnpm
 
 # 运行
 代码里提供了示例SSL证书,该证书对应的域名是rtc.liweix.com,实际运行时,请提供自己的证书,证书要与访问域名一致.
+
 ## 进入dist目录
 ```
 cd dist
@@ -62,16 +52,10 @@ cd dist
 
 ## 方法一： 运行server.js
 ```
-node server.js --cert ../certs/rtc.liweix.com.pem --key ../certs/rtc.liweix.com.key
-
-# 如果获取公网IP地址失败,则可以使用--publicIp 手动提供公网IP地址
-node server.js --cert ../certs/rtc.liweix.com.pem --key ../certs/rtc.liweix.com.key --publicIp x.x.x.x
-
-# 默认使用网卡名称 eth0 ，如果你的网卡名不同，须用 --eth 指定
-node server.js --cert ../certs/rtc.liweix.com.pem --key ../certs/rtc.liweix.com.key --eth <ifname>
+node server.js
 ```
 
-## 方法二： 直接运行start.sh(使用默认证书)
+## 方法二： 直接运行start.sh
 ```
 ./start.sh
 ```
