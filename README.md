@@ -31,7 +31,22 @@ WiLearning使用了WebRTC技术，服务器端使用Typescript + Nodejs + MediaS
 * "房间不存在" --- 在app/src/app/config.ts修改服务器地址，重新编译app
 * "不显示视频" --- 网络配置错误，修改start.sh文件，将默认使用的eth0改成可用的网卡名
 
+## 配置
+
+### admin
+
+不用配置
+
+### app
+
+配置文件路径在 `app/src/app/config.ts`
+
+### server
+
+配置文件路径在 `server/config/config.ts`
+
 ## 构建所有
+
 ```
 ./build.sh all
 ```
